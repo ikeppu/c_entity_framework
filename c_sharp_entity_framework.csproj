@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>disable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.12">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
+		<PackageReference Include="AutoMapper" Version="12.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Remove="Controllers\" />
+		<None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
+		<None Remove="Microsoft.EntityFrameworkCore.Tools" />
+		<None Remove="Entities\" />
+		<None Remove="Pomelo.EntityFrameworkCore.MySql" />
+		<None Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
+		<None Remove="Entities\Configurations\" />
+		<None Remove="Entities\Seeding\" />
+		<None Remove="Migrations\" />
+		<None Remove="Utilities\" />
+		<None Remove="DTOs\" />
+		<None Remove="AutoMapper" />
+		<None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
+		<None Remove="Entities\Enums\" />
+		<None Remove="Entities\Conversions\" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Controllers\" />
+		<Folder Include="Entities\" />
+		<Folder Include="Entities\Configurations\" />
+		<Folder Include="Entities\Seeding\" />
+		<Folder Include="Migrations\" />
+		<Folder Include="Utilities\" />
+		<Folder Include="DTOs\" />
+		<Folder Include="Entities\Enums\" />
+		<Folder Include="Entities\Conversions\" />
+	</ItemGroup>
+</Project>
