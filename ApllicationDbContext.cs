@@ -2,14 +2,37 @@
 using System.Reflection;
 using c_sharp_entity_framework.Entities;
 using c_sharp_entity_framework.Entities.Seeding;
+using c_sharp_entity_framework.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace c_sharp_entity_framework
 {
     public class ApllicationDbContext : DbContext
     {
-        public ApllicationDbContext(DbContextOptions options) : base(options)
+        private readonly IUserService userService;
+
+        public ApllicationDbContext()
         {
+
+        }
+
+        public ApllicationDbContext(DbContextOptions options,
+            IUserService userService, IChangeTrackerEventHandler changeTrackerEventHandler) : base(options)
+        {
+            this.userService = userService;
+            if (changeTrackerEventHandler is not null)
+            {
+                ChangeTracker.Tracked += changeTrackerEventHandler.TrackHandler;
+                ChangeTracker.StateChanged += changeTrackerEventHandler.StateChangeHandler;
+                SavingChanges += changeTrackerEventHandler.SavingChangedHandler;
+                SavedChanges += changeTrackerEventHandler.SavedChangesHandler;
+                SaveChangesFailed += changeTrackerEventHandler.SavedChangesFailHandler;
+            }
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder modelConfigurationBuilder)
@@ -59,6 +82,36 @@ namespace c_sharp_entity_framework
             modelBuilder.Entity<RentableMovie>().HasData(movie);
 
 
+        }
+
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+
+            ProcessSaveChanges();
+
+            return base.SaveChangesAsync(cancellationToken);
+
+
+        }
+
+        private void ProcessSaveChanges()
+        {
+            foreach (var item in ChangeTracker.Entries().Where(e =>
+                e.State == EntityState.Added && e.Entity is AuditableEntity))
+            {
+                var entity = item.Entity as AuditableEntity;
+                entity.CreatedBy = userService.GetUserId();
+                entity.ModifiedBy = userService.GetUserId();
+
+            }
+
+            foreach (var item in ChangeTracker.Entries().Where(e =>
+                e.State == EntityState.Modified && e.Entity is AuditableEntity))
+            {
+                var entity = item.Entity as AuditableEntity;
+                entity.ModifiedBy = userService.GetUserId();
+                item.Property(nameof(entity.CreatedBy)).IsModified = false;
+            }
         }
 
         public DbSet<Genre> Genres { get; set; }

@@ -71,9 +71,10 @@ namespace c_sharp_entity_framework.Controllers
 
             _context.Add(genre); // marking genre as added.
 
-            await _context.SaveChangesAsync(); // make save
-            var status = _context.Entry(genre).State;
+            //_context.Entry(genre).State = EntityState.Added;
 
+            await _context.SaveChangesAsync(); // make save
+            //var status = _context.Entry(genre).State;
 
             return Ok();
         }
@@ -88,6 +89,27 @@ namespace c_sharp_entity_framework.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        public async Task<ActionResult> Put(Genre genre)
+        {
+            _context.Update(genre);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
+        [HttpGet("raw-query")]
+        public async Task<ActionResult> GetRawQuery(int id)
+        {
+
+            //Doesn't work
+            var genre = await _context.Genres.FromSqlRaw("SELECT * FROM Genres")
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync();
+
+            return Ok(genre);
+        }
 
     }
 }

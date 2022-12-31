@@ -7,7 +7,7 @@ namespace c_sharp_entity_framework.Entities
 {
     //[Table(name: "Genrestbl", Schema = "movies")]
     //[Index(nameof(Name), IsUnique = true)]
-    public class Genre
+    public class Genre : AuditableEntity
     {
         // [Key]
         public int Id { get; set; }
