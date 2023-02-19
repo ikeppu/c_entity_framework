@@ -16,31 +16,17 @@
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
 	</ItemGroup>
 	<ItemGroup>
-		<None Remove="Controllers\" />
 		<None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
 		<None Remove="Microsoft.EntityFrameworkCore.Tools" />
-		<None Remove="Entities\" />
 		<None Remove="Pomelo.EntityFrameworkCore.MySql" />
 		<None Remove="Npgsql.EntityFrameworkCore.PostgreSQL" />
-		<None Remove="Entities\Configurations\" />
-		<None Remove="Entities\Seeding\" />
-		<None Remove="Migrations\" />
-		<None Remove="Utilities\" />
-		<None Remove="DTOs\" />
 		<None Remove="AutoMapper" />
 		<None Remove="AutoMapper.Extensions.Microsoft.DependencyInjection" />
-		<None Remove="Entities\Enums\" />
-		<None Remove="Entities\Conversions\" />
+		<None Remove="Entities\" />
+		<None Remove="Entities\Configurations\" />
 	</ItemGroup>
 	<ItemGroup>
-		<Folder Include="Controllers\" />
-		<Folder Include="Entities\" />
-		<Folder Include="Entities\Configurations\" />
-		<Folder Include="Entities\Seeding\" />
-		<Folder Include="Migrations\" />
-		<Folder Include="Utilities\" />
-		<Folder Include="DTOs\" />
-		<Folder Include="Entities\Enums\" />
-		<Folder Include="Entities\Conversions\" />
+	  <Folder Include="Entities\" />
+	  <Folder Include="Entities\Configurations\" />
 	</ItemGroup>
 </Project>

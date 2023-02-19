@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using c_sharp_entity_framework;
@@ -11,9 +12,10 @@ using c_sharp_entity_framework;
 namespace c_sharp_entity_framework.Migrations
 {
     [DbContext(typeof(ApllicationDbContext))]
-    partial class ApllicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230217053613_CinemaHall")]
+    partial class CinemaHall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,12 +71,6 @@ namespace c_sharp_entity_framework.Migrations
                         .HasColumnType("integer");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CinemaHallType")
-                        .ValueGeneratedOnAdd()
-                        .HasPrecision(9, 5)
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
 
                     b.Property<int>("CinemaId")
                         .HasColumnType("integer");
@@ -166,43 +162,6 @@ namespace c_sharp_entity_framework.Migrations
                     b.ToTable("Movies");
                 });
 
-            modelBuilder.Entity("c_sharp_entity_framework.Entities.MovieActor", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("ActorId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Character")
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
-                    b.HasKey("MovieId", "ActorId");
-
-                    b.HasIndex("ActorId");
-
-                    b.ToTable("MovieActors");
-                });
-
-            modelBuilder.Entity("GenreMovie", b =>
-                {
-                    b.Property<int>("GenresId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MoviesId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GenresId", "MoviesId");
-
-                    b.HasIndex("MoviesId");
-
-                    b.ToTable("GenreMovie");
-                });
-
             modelBuilder.Entity("c_sharp_entity_framework.Entities.CinemaHall", b =>
                 {
                     b.HasOne("c_sharp_entity_framework.Entities.Cinema", "Cinema")
@@ -223,55 +182,11 @@ namespace c_sharp_entity_framework.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("c_sharp_entity_framework.Entities.MovieActor", b =>
-                {
-                    b.HasOne("c_sharp_entity_framework.Entities.Actor", "Actor")
-                        .WithMany("MovieActors")
-                        .HasForeignKey("ActorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("c_sharp_entity_framework.Entities.Movie", "Movie")
-                        .WithMany("MovieActors")
-                        .HasForeignKey("MovieId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Actor");
-
-                    b.Navigation("Movie");
-                });
-
-            modelBuilder.Entity("GenreMovie", b =>
-                {
-                    b.HasOne("c_sharp_entity_framework.Entities.Genre", null)
-                        .WithMany()
-                        .HasForeignKey("GenresId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("c_sharp_entity_framework.Entities.Movie", null)
-                        .WithMany()
-                        .HasForeignKey("MoviesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("c_sharp_entity_framework.Entities.Actor", b =>
-                {
-                    b.Navigation("MovieActors");
-                });
-
             modelBuilder.Entity("c_sharp_entity_framework.Entities.Cinema", b =>
                 {
                     b.Navigation("CinemaHalls");
 
                     b.Navigation("CinemaOffer");
-                });
-
-            modelBuilder.Entity("c_sharp_entity_framework.Entities.Movie", b =>
-                {
-                    b.Navigation("MovieActors");
                 });
 #pragma warning restore 612, 618
         }

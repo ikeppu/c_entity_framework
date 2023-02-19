@@ -5,14 +5,12 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace c_sharp_entity_framework.Entities.Configurations
 {
-    public class GenreConfig : IEntityTypeConfiguration<Genre>
+    public class CinemaConfig : IEntityTypeConfiguration<Cinema>
     {
 
-        public void Configure(EntityTypeBuilder<Genre> builder)
+        public void Configure(EntityTypeBuilder<Cinema> builder)
         {
-            builder
-             .Property(p => p.Name)
-             .IsRequired();
+            builder.Property(p => p.Name).IsRequired();
         }
     }
 }
